@@ -32,14 +32,18 @@ MainWindow.show()
 master = None
 is_armed = False
 
-adres_giris = "http://localhost:64559/api/giris" # post
+adres_giris = "https://savasaniha.baykartech.com/api/giris" # post
 
 response_giris = Api_Post(adres_giris,{
     "kadi" : "ikaruss7",
     "sifre" : "r7pr8zCywP"
 }, "ikaruss7", "r7pr8zCywP")
 
-ui.statusbar.showMessage(str(response_giris))
+if response_giris.status_code == 200:
+    ui.statusbar.showMessage("Success")
+else:
+    ui.statusbar.showMessage("Request failed")
+
 
 def PortConnection():
     port = str(ui.port.currentText())
