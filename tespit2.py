@@ -1,11 +1,10 @@
-
 import torch
 import numpy as np
 import cv2
 from time import time
 
 class BottleDetector:
-    
+   
 
     def __init__(self, capture_index, model_name):
         """
@@ -51,7 +50,6 @@ class BottleDetector:
         classlarımızı labela dönüştürüyoruz.
         """
         return self.classes[int(x)]
-
     def plot_boxes(self, results, frame):
         """
         aranan objenin hangi konumlar içinde olduğunu buluyoruz.
@@ -72,10 +70,8 @@ class BottleDetector:
                 x_center, y_center = int((x1+x2)/2), int((y1+y2)/2)
                 cv2.circle(frame, (x_center, y_center), 5, (0, 0, 255), -1)
                 cv2.putText(frame, f"Center: ({x_center}, {y_center})", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, bgr, 2)
-                print(frame)
         return frame
-        
-
+    
     def __call__(self):
         
         """

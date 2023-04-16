@@ -1,11 +1,11 @@
 import requests
-from tespit2 import BottleDetector
 from api_get_post import Api_Get, Api_Post
+import time
 
 # Post isteği yapılacak URL
-url_giris = "https://savasaniha.baykartech.com/api/giris"
-url_sunucusaati = "https://savasaniha.baykartech.com/api/sunucusaati"
-url_telemetri = "https://savasaniha.baykartech.com/api/"
+url_giris = "http://10.0.0.10:10001/api/giris"
+url_sunucusaati = "https://10.0.0.10:10001/api/sunucusaati"
+url_telemetri = "https://10.0.0.10:10001/api/telemetri_gonder"
 
 # Gönderilecek JSON verisi
 data = {
@@ -14,15 +14,15 @@ data = {
         "sifre": "r7pr8zCywP"
             },
     "telemetri":{
-        'takim_numarasi': 10,
-        'iha_enlem': "current_lat",
-        'iha_boylam': "current_lon",
-        'iha_irtifa': "current_alt",
-        'iha_dikilme': "pitch",   # pitch
-        'iha_yonelme': "yaw",  # yaw
-        'iha_yatis': "roll",  # roll
-        'iha_hiz': "",
-        'iha_otonom': False if  "" else True,
+        "takim_numarasi": 7,
+        "iha_enlem": "",
+        "iha_boylam": "",
+        "iha_irtifa": "",
+        "iha_dikilme": "",
+        "iha_yonelme": "",
+        "iha_yatis": "",
+        "iha_hiz": "",
+        "iha_otonom": "",
         "iha_kilitlenme": "",
         "hedef_merkez_x": "",
         "hedef_merkez_y": "",
@@ -48,7 +48,11 @@ data = {
             }
         }
 
-# Api_Post(url_giris, data["giris"], data["giris"]["kadi"], data["giris"]["sifre"])
+Api_Post(url_giris, data["giris"], data["giris"]["kadi"], data["giris"]["sifre"])
+
+while True:
+    Api_Post(url_telemetri, data["telemetri"], data["giris"]["kadi"], data["giris"]["sifre"])
+    time.sleep(2000)
 
 
 # Api_Get(url_sunucusaati)
