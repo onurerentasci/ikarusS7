@@ -135,6 +135,8 @@ def button_disarm_clicked():
     ui.statusbar.showMessage("DISARM EDİLDİ")
 
 
+
+
 def check_motor_status():
     global motor_status
     motor_status = motor_status + 1
