@@ -74,7 +74,6 @@ class BottleDetector:
                 cv2.putText(frame, f"Center: ({x_center}, {y_center})", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, bgr, 2)
 
         return frame
-
         
 
     def __call__(self):
