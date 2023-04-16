@@ -50,8 +50,5 @@ data = {
 # Api_Post(url_giris, data["giris"], data["giris"]["kadi"], data["giris"]["sifre"])
 
 
-# i = 0
-# while i < 10:
-#     Api_Get(url_sunucusaati)
-#     i = i+1
+# Api_Get(url_sunucusaati)
 
