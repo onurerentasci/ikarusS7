@@ -25,6 +25,7 @@ def Api_Post(adres, model, username, password):
             print(response.text)
             return response.text
         else:
+            print(response)
             return response
     except Exception as ex:
         print(ex)
