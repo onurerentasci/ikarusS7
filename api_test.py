@@ -50,6 +50,5 @@ data = {
 
 # Api_Post(url_giris, data["giris"], data["giris"]["kadi"], data["giris"]["sifre"])
 
-
 # Api_Get(url_sunucusaati)
 
