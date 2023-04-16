@@ -72,7 +72,7 @@ class BottleDetector:
                 x_center, y_center = int((x1+x2)/2), int((y1+y2)/2)
                 cv2.circle(frame, (x_center, y_center), 5, (0, 0, 255), -1)
                 cv2.putText(frame, f"Center: ({x_center}, {y_center})", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, bgr, 2)
-
+                print(frame)
         return frame
         
 
@@ -111,5 +111,5 @@ class BottleDetector:
         
 # yeni bir obje oluşturarak çalıştırıyoruz.
 
-detector = BottleDetector(capture_index=0, model_name='/home/erlikhan/Masaüstü/yazılım/ikarusS7/best_son.pt')
+detector = BottleDetector(capture_index=0, model_name="C:/Users/mgull/OneDrive/Masaüstü/ikarus/ikarusS7/best_son.pt")
 detector()
