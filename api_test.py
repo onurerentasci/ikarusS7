@@ -1,4 +1,5 @@
 import requests
+from tespit2 import BottleDetector
 from api_get_post import Api_Get, Api_Post
 
 # Post isteği yapılacak URL
