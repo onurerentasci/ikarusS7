@@ -40,9 +40,9 @@ response_giris = Api_Post(adres_giris,{
 }, "ikaruss7", "r7pr8zCywP")
 
 if response_giris.status_code == 200:
-    ui.statusbar.showMessage("Success")
+    ui.statusbar.showMessage("Giriş başarılı!")
 else:
-    ui.statusbar.showMessage("Request failed")
+    ui.statusbar.showMessage("Giriş başarısız!")
 
 
 def PortConnection():
