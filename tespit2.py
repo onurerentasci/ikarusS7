@@ -65,10 +65,17 @@ class BottleDetector:
                 x1, y1, x2, y2 = int(row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
                 bgr = (0, 255, 0)
                 cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
-                cv2.putText(frame, self.class_to_label(labels[i]), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
+                label = self.class_to_label(labels[i])
+                cv2.putText(frame, label, (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
                 
+                # Hesaplanan koordinatların merkez noktasını hesapla ve ekrana yazdır
+                x_center, y_center = int((x1+x2)/2), int((y1+y2)/2)
+                cv2.circle(frame, (x_center, y_center), 5, (0, 0, 255), -1)
+                cv2.putText(frame, f"Center: ({x_center}, {y_center})", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, bgr, 2)
 
         return frame
+
+        
 
     def __call__(self):
         
@@ -105,5 +112,5 @@ class BottleDetector:
         
 # yeni bir obje oluşturarak çalıştırıyoruz.
 
-detector = BottleDetector(capture_index=0, model_name='C:/Users/mgull/OneDrive/Masaüstü/ikarus/ikarusS7/best_son.pt')
+detector = BottleDetector(capture_index=0, model_name='/home/erlikhan/Masaüstü/yazılım/ikarusS7/best_son.pt')
 detector()
