@@ -22,11 +22,12 @@ def Api_Post(adres, model, username, password):
         response = requests.post(adres, data=json_data, headers=headers, auth=(username, password))
         
         if response.status_code == requests.codes.ok:
-            print(response.text)
+            print(response)
             return response.text
         else:
             print(response)
-            return response
+            return response            
+
     except Exception as ex:
         print(ex)
         return None
