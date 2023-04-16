@@ -29,10 +29,19 @@ data = {
         "hedef_yukseklik": "",
         "gps_saati":{
             
-        }
+        "kilitlenme_bilgisi": {
+            "kilitlenmeBaslangicZamani": "",
+            "kilitlenmeBitisZamani": "",
+            "otonom_kilitlenme": ""
+        },
+        "kamikaze_bilgisi": {
+            "kamikazeBaslangicZamani": "",
+            "kamikazeBitisZamani": "",
+            "qr_metni": ""
                 }
-
-}
+            }
+        }
+    }
 
 # Api_Post(url_giris, data["giris"], data["giris"]["kadi"], data["giris"]["sifre"])
 
