@@ -67,3 +67,19 @@ data = {
             "qr_metni": "teknofest2023"
                 }
             }
+
+session = requests.Session()
+response = session.post(url_giris, json=data["giris"])
+if response.status_code == 200:
+    print("Oturum açma başarılı")
+else:
+    print("Oturum açma başarısız:", response.status_code)
+    exit()
+
+# Sürekli telemetri gönderme işlemi
+while True:
+    response = session.post(url_telemetri, json=data["telemetri"])
+    if response.status_code == 200:
+        print("Telemetri gönderildi:", response.text)
+    else:
+        time.sleep(2)
