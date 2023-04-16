@@ -287,13 +287,6 @@ def SystemInformation():
                     "saniye": datetime.datetime.now().second,
                     "milisaniye": datetime.datetime.now().microsecond
                 },
-                # "sistem_saati":{
-                #     "gun" : server_gun,
-                #     "saat": server_saat,
-                #     "dakika": server_dakika,
-                #     "saniye": server_saniye,
-                #     "milisaniye": server_milisaniye
-                # },
                 "telemetri_verisi": {
                     'takim_numarasi': 10,
                     'iha_enlem': current_lat,
@@ -309,6 +302,13 @@ def SystemInformation():
                     "hedef_merkez_y": "",
                     "hedef_genislik": "",
                     "hedef_yukseklik": "",
+                    "gps_saati": {
+                        "saat": 11, 
+                        "dakika": 38, 
+                        "saniye": 37, 
+                        "milisaniye": 654 
+                    },
+
 
                 "kilitlenme_bilgisi": {
                     "kilitlenmeBaslangicZamani": "",
