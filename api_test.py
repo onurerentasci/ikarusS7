@@ -33,7 +33,8 @@ data = {
             "dakika":"57",
             "saniye":"12",
             "milisaniye":"2143"
-        },
+        }
+},
             
         "kilitlenme_bilgisi": {
             "kilitlenmeBaslangicZamani": "13:58:02:123",
@@ -46,7 +47,6 @@ data = {
             "qr_metni": "teknofest2023"
                 }
             }
-        }
 
 # Api_Post(url_giris, data["giris"], data["giris"]["kadi"], data["giris"]["sifre"])
 
