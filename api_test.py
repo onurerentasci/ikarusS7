@@ -48,8 +48,8 @@ data = {
             }
         }
 
-    Api_Post(url_telemetri, data["telemetri"], data["giris"]["kadi"], data["giris"]["sifre"])
-    time.sleep(2)
+Api_Post(url_telemetri, data["telemetri"], data["giris"]["kadi"], data["giris"]["sifre"])
+time.sleep(2)
 
 # Api_Get(url_sunucusaati)
 
