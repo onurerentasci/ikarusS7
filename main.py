@@ -272,6 +272,20 @@ def SystemInformation():
 
             ui.map_view.load(QUrl.fromLocalFile(os.path.abspath("map.html")))
 
+            response = Api_Get("https://savasaniha.baykartech.com/api/sunucusaati")
+            temp = f"{response['gun']}:{response['saat']}:{response['dakika']}:{response['saniye']}:{response['milisaniye']}"
+            ui.serverTime_lbl.setText(temp)
+            server_gun = 0
+            server_saat = 0
+            server_dakika = 0
+            server_saniye = 0
+            server_milisaniye = 0
+            server_gun = response["gun"]
+            server_saat = response["saat"]
+            server_dakika = response["dakika"]
+            server_saniye = response["saniye"]
+            server_milisaniye = response["milisaniye"]
+
             data_list = []
 
             # Her bir data sözlüğünü data_list listesine ekleyin
@@ -297,23 +311,23 @@ def SystemInformation():
                     'iha_yatis': roll,  # roll
                     'iha_hiz': SpeedMessage.airspeed,
                     'iha_otonom': False if  ui.current_mode_lbl != "OTONOM" else True,
-                    "iha_kilitlenme": "",
+                    "iha_kilitlenme": False if "tesit_değeri_is_not_true" else True,
                     "hedef_merkez_x": "",
                     "hedef_merkez_y": "",
                     "hedef_genislik": "",
                     "hedef_yukseklik": "",
                     "gps_saati": {
-                        "saat": 11, 
-                        "dakika": 38, 
-                        "saniye": 37, 
-                        "milisaniye": 654 
+                        "saat": server_saat, 
+                        "dakika": server_dakika,
+                        "saniye": server_saniye, 
+                        "milisaniye": server_milisaniye 
                     },
 
 
                 "kilitlenme_bilgisi": {
                     "kilitlenmeBaslangicZamani": "",
                     "kilitlenmeBitisZamani": "",
-                    "otonom_kilitlenme": ""
+                    "otonom_kilitlenme": False if "otonom_kilitlenme_is_not_true" else True
                 },
                 "kamikaze_bilgisi": {
                     "kamikazeBaslangicZamani": "",
@@ -322,19 +336,6 @@ def SystemInformation():
                 }
             }
         }
-            response = Api_Get("https://savasaniha.baykartech.com/api/sunucusaati")
-            temp = f"{response['gun']}:{response['saat']}:{response['dakika']}:{response['saniye']}:{response['milisaniye']}"
-            ui.serverTime_lbl.setText(temp)
-            server_gun = 0
-            server_saat = 0
-            server_dakika = 0
-            server_saniye = 0
-            server_milisaniye = 0
-            server_gun = response["gun"]
-            server_saat = response["saat"]
-            server_dakika = response["dakika"]
-            server_saniye = response["saniye"]
-            server_milisaniye = response["milisaniye"]
 
             data_list.append(data)
 
