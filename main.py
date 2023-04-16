@@ -295,22 +295,22 @@ def SystemInformation():
                     'sifre': "r7pr8zCywP"
                 },
                 "sistem_saati":{
-                    "gun": datetime.datetime.now().day,
-                    "saat": datetime.datetime.now().hour,
-                    "dakika": datetime.datetime.now().minute,
-                    "saniye": datetime.datetime.now().second,
-                    "milisaniye": datetime.datetime.now().microsecond
+                    "gun": server_gun,
+                    "saat": server_saat,
+                    "dakika": server_dakika,
+                    "saniye": server_saniye,
+                    "milisaniye": server_milisaniye
                 },
                 "telemetri_verisi": {
-                    'takim_numarasi': 10,
-                    'iha_enlem': current_lat,
-                    'iha_boylam': current_lon,
-                    'iha_irtifa': current_alt,
-                    'iha_dikilme': pitch,   # pitch
-                    'iha_yonelme': yaw,  # yaw
-                    'iha_yatis': roll,  # roll
-                    'iha_hiz': SpeedMessage.airspeed,
-                    'iha_otonom': False if  ui.current_mode_lbl != "OTONOM" else True,
+                    "takim_numarasi": 10,
+                    "iha_enlem": current_lat,
+                    "iha_boylam": current_lon,
+                    "iha_irtifa": current_alt,
+                    "iha_dikilme": pitch,
+                    "iha_yonelme": yaw,
+                    "iha_yatis": roll,
+                    "iha_hiz": SpeedMessage.airspeed,
+                    "iha_otonom": False if  ui.current_mode_lbl != "OTONOM" else True,
                     "iha_kilitlenme": False if "tesit_değeri_is_not_true" else True,
                     "hedef_merkez_x": "",
                     "hedef_merkez_y": "",
@@ -322,7 +322,6 @@ def SystemInformation():
                         "saniye": server_saniye, 
                         "milisaniye": server_milisaniye 
                     },
-
 
                 "kilitlenme_bilgisi": {
                     "kilitlenmeBaslangicZamani": "",
