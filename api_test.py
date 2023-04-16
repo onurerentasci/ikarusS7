@@ -28,6 +28,11 @@ data = {
         "hedef_genislik": "",
         "hedef_yukseklik": "",
         "gps_saati":{
+            "saat":"",
+            "dakika":"",
+            "saniye":"",
+            "milisaniye":""
+        },
             
         "kilitlenme_bilgisi": {
             "kilitlenmeBaslangicZamani": "",
@@ -41,7 +46,6 @@ data = {
                 }
             }
         }
-    }
 
 # Api_Post(url_giris, data["giris"], data["giris"]["kadi"], data["giris"]["sifre"])
 
