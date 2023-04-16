@@ -302,7 +302,7 @@ def SystemInformation():
                     "milisaniye": server_milisaniye
                 },
                 "telemetri_verisi": {
-                    "takim_numarasi": 10,
+                    "takim_numarasi": 7,
                     "iha_enlem": current_lat,
                     "iha_boylam": current_lon,
                     "iha_irtifa": current_alt,
@@ -322,7 +322,7 @@ def SystemInformation():
                         "saniye": server_saniye, 
                         "milisaniye": server_milisaniye 
                     },
-
+                },
                 "kilitlenme_bilgisi": {
                     "kilitlenmeBaslangicZamani": "",
                     "kilitlenmeBitisZamani": "",
@@ -334,7 +334,6 @@ def SystemInformation():
                     "qr_metni": ""
                 }
             }
-        }
 
             data_list.append(data)
 
