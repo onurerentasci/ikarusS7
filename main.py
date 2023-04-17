@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QTimer
 from ver6 import *
 
-from haberlesme import GirisBilgileri, SunucuSaati, TelemetriVerisi, KilitlenmeBilgisi
+from haberlesme import GirisBilgileri, SunucuSaati, TelemetriVerisi
 from api_get_post import Api_Get, Api_Post
 
 import serial.tools.list_ports
@@ -32,17 +32,16 @@ MainWindow.show()
 master = None
 is_armed = False
 
-adres_giris = "https://savasaniha.baykartech.com/api/giris" # post
+adres_giris = "http://10.0.0.10:10001/api/giris" # post
 
-response_giris = Api_Post(adres_giris,{
-    "kadi" : "ikaruss7",
-    "sifre" : "r7pr8zCywP"
-}, "ikaruss7", "r7pr8zCywP")
+session = requests.Session()
+headers = {'Content-Type' : 'application/json'}
+response_giris = session.post(adres_giris,json={"kadi":"ikaruss7", "sifre":"r7pr8zCywP"}, headers=headers)
 
 if response_giris.status_code == 200:
-    ui.statusbar.showMessage("Giriş başarılı!")
+    ui.statusbar.showMessage("Giriş başarılı! {}".format(response_giris))
 else:
-    ui.statusbar.showMessage("Giriş başarısız!")
+    ui.statusbar.showMessage("Giriş başarısız! {}".format(response_giris))
 
 
 def PortConnection():
@@ -217,8 +216,8 @@ def SystemInformation():
         filename = "data/{}_{}_{}_{}_{}_{}.json".format(
             now.day, now.month, now.year, now.hour, now.minute, now.second)
 
-        adres_telemetri = "http://localhost:64559/api/telemetri_gonder" # post
-        sunucu_saati = "http://localhost:64559/api/sunucu_saati" # get
+        adres_telemetri = "http://10.0.0.10:10001/api/telemetri_gonder" # post
+        sunucu_saati = "http://localhost:64559/api/sunucusaati" # get
         adres_kilitlenme = "http://localhost:64559/api/kilitlenme_bilgisi" # post
         adres_kamikaze = "http://localhost:64559/api/kamikaze_bilgisi" # post
         adres_qr = "http://localhost:64559/api/qr_koordinatı" #get
@@ -242,7 +241,7 @@ def SystemInformation():
 
             SpeedMessage = master.recv_match(type='VFR_HUD', blocking=True)
             ui.speedValue_lbl.setText(
-                "{:.2f} m/s".format(SpeedMessage.airspeed))
+                "{:.0f} m/s".format(SpeedMessage.airspeed))
 
             WindMessage = master.recv_match(type='WIND', blocking=True)
             ui.windValue_lbl.setText("{:.2f} m/s".format(WindMessage.speed))
@@ -272,21 +271,12 @@ def SystemInformation():
 
             ui.map_view.load(QUrl.fromLocalFile(os.path.abspath("map.html")))
 
-            response = Api_Get("https://savasaniha.baykartech.com/api/sunucusaati")
-            temp = f"{response['gun']}:{response['saat']}:{response['dakika']}:{response['saniye']}:{response['milisaniye']}"
+            response_saat = Api_Get("http://10.0.0.10:10001/api/sunucusaati")
+            sunucusaat = response_saat.json()
+            temp = "Gün:{}-  Saat:{}:{}:{}:{}".format(sunucusaat["gun"], sunucusaat["saat"], sunucusaat["dakika"], sunucusaat["saniye"], sunucusaat["milisaniye"])
             ui.serverTime_lbl.setText(temp)
-            server_gun = 0
-            server_saat = 0
-            server_dakika = 0
-            server_saniye = 0
-            server_milisaniye = 0
-            server_gun = response["gun"]
-            server_saat = response["saat"]
-            server_dakika = response["dakika"]
-            server_saniye = response["saniye"]
-            server_milisaniye = response["milisaniye"]
-
             data_list = []
+
 
             # Her bir data sözlüğünü data_list listesine ekleyin
             data = {
@@ -295,43 +285,44 @@ def SystemInformation():
                     'sifre': "r7pr8zCywP"
                 },
                 "sistem_saati":{
-                    "gun": server_gun,
-                    "saat": server_saat,
-                    "dakika": server_dakika,
-                    "saniye": server_saniye,
-                    "milisaniye": server_milisaniye
+                    "gun": int(sunucusaat["gun"]),
+                    "saat": int(sunucusaat["saat"]),
+                    "dakika": int(sunucusaat["dakika"]),
+                    "saniye": int(sunucusaat["saniye"]),
+                    "milisaniye": int(sunucusaat["milisaniye"])
                 },
                 "telemetri_verisi": {
                     "takim_numarasi": 7,
-                    "iha_enlem": current_lat,
-                    "iha_boylam": current_lon,
-                    "iha_irtifa": current_alt,
-                    "iha_dikilme": pitch,
-                    "iha_yonelme": yaw,
-                    "iha_yatis": roll,
-                    "iha_hiz": SpeedMessage.airspeed,
-                    "iha_otonom": False if  ui.current_mode_lbl != "OTONOM" else True,
-                    "iha_kilitlenme": False if "tesit_değeri_is_not_true" else True,
-                    "hedef_merkez_x": "",
-                    "hedef_merkez_y": "",
-                    "hedef_genislik": "",
-                    "hedef_yukseklik": "",
+                    "iha_enlem": float(current_lat),
+                    "iha_boylam": float(current_lon),
+                    "iha_irtifa": int(current_alt),
+                    "iha_dikilme": int(pitch),
+                    "iha_yonelme": int(yaw),
+                    "iha_yatis": int(roll),
+                    "iha_hiz": int(SpeedMessage.airspeed),
+                    "iha_batarya": int(50),
+                    "iha_otonom": 0 if  ui.current_mode_lbl != "OTONOM" else 1,
+                    "iha_kilitlenme": int(0),
+                    "hedef_merkez_x": int(0),
+                    "hedef_merkez_y": int(0),
+                    "hedef_genislik": int(0),
+                    "hedef_yukseklik": int(0),
                     "gps_saati": {
-                        "saat": server_saat, 
-                        "dakika": server_dakika,
-                        "saniye": server_saniye, 
-                        "milisaniye": server_milisaniye 
+                        "saat": int(sunucusaat["saat"]), 
+                        "dakika": int(sunucusaat["dakika"]),
+                        "saniye": int(sunucusaat["saniye"]), 
+                        "milisaniye": int(sunucusaat["milisaniye"]) 
                     },
                 },
                 "kilitlenme_bilgisi": {
                     "kilitlenmeBaslangicZamani": "",
                     "kilitlenmeBitisZamani": "",
-                    "otonom_kilitlenme": False if "otonom_kilitlenme_is_not_true" else True
+                    "otonom_kilitlenme": 0 if "otonom_kilitlenme_is_not_true" else 1
                 },
                 "kamikaze_bilgisi": {
                     "kamikazeBaslangicZamani": "",
                     "kamikazeBitisZamani": "",
-                    "qr_metni": ""
+                    "qr_metni": "teknofest2023"
                 }
             }
 
@@ -358,8 +349,14 @@ def SystemInformation():
 
             # Response Request
 
-            # Api_Post(adres_giris, data["giris_bilgileri"], ui.response_giris_lbl)
-            # Api_Post(adres_telemetri, data["telemetri_verisi"], ui.response_telemetri_lbl)
+            session = requests.Session()
+            headers = {'Content-Type' : 'application/json'}
+            response_telemetri = session.post(adres_telemetri,json=data["telemetri_verisi"], headers=headers)
+
+            if response_telemetri.status_code == 200:
+                ui.statusbar.showMessage("Telemetri başarılı! {}".format(response_telemetri))
+            else:
+                ui.statusbar.showMessage("Telemetri başarısız! {}".format(response_telemetri))
 
             QApplication.processEvents()
 
